@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from lms.models import Chapter, Material
+from lms.models import Chapter, Material, CheckAnswer, Answer
 
 
 class ChapterSerializer(serializers.ModelSerializer):
@@ -18,4 +18,18 @@ class MaterialSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Material
+        fields = '__all__'
+
+
+class CheckAnswerSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = CheckAnswer
+        fields = '__all__'
+
+
+class AnswerSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Answer
         fields = '__all__'
