@@ -9,7 +9,7 @@ from users.permissons import IsModer
 
 class ChapterCreateAPIView(generics.CreateAPIView):
     """
-    Отвечает за создание нового Раздела
+    Отвечает за создание нового Раздела.
     """
     serializer_class = ChapterSerializer
     permission_classes = [IsModer]
@@ -17,7 +17,7 @@ class ChapterCreateAPIView(generics.CreateAPIView):
 
 class ChapterListAPIView(generics.ListAPIView):
     """
-    Отвечает за отображение списка Разделов
+    Отвечает за отображение списка Разделов.
     """
     serializer_class = ChapterSerializer
     queryset = Chapter.objects.all()
@@ -25,7 +25,7 @@ class ChapterListAPIView(generics.ListAPIView):
 
 class ChapterRetrieveAPIView(generics.RetrieveAPIView):
     """
-    Отвечает за отображение одного Раздела
+    Отвечает за отображение одного Раздела.
     """
     serializer_class = ChapterSerializer
     queryset = Chapter.objects.all()
@@ -33,7 +33,7 @@ class ChapterRetrieveAPIView(generics.RetrieveAPIView):
 
 class ChapterUpdateAPIView(generics.UpdateAPIView):
     """
-    Отвечает за редактирование Раздела
+    Отвечает за редактирование Раздела.
     """
     serializer_class = ChapterSerializer
     queryset = Chapter.objects.all()
@@ -42,7 +42,7 @@ class ChapterUpdateAPIView(generics.UpdateAPIView):
 
 class ChapterDestroyAPIView(generics.DestroyAPIView):
     """
-    Отвечает за удаление Раздела
+    Отвечает за удаление Раздела.
     """
     queryset = Chapter.objects.all()
     permission_classes = [IsModer]
@@ -50,7 +50,7 @@ class ChapterDestroyAPIView(generics.DestroyAPIView):
 
 class MaterialCreateAPIView(generics.CreateAPIView):
     """
-    Отвечает за создание нового Материала
+    Отвечает за создание нового Материала.
     """
     serializer_class = MaterialSerializer
     permission_classes = [IsModer]
@@ -58,7 +58,7 @@ class MaterialCreateAPIView(generics.CreateAPIView):
 
 class MaterialListAPIView(generics.ListAPIView):
     """
-    Отвечает за отображение списка Материалов
+    Отвечает за отображение списка Материалов.
     """
     serializer_class = MaterialSerializer
     queryset = Material.objects.all()
@@ -68,7 +68,7 @@ class MaterialListAPIView(generics.ListAPIView):
 
 class MaterialRetrieveAPIView(generics.RetrieveAPIView):
     """
-    Отвечает за отображение одного Материла
+    Отвечает за отображение одного Материла.
     """
     serializer_class = MaterialSerializer
     queryset = Material.objects.all()
@@ -76,7 +76,7 @@ class MaterialRetrieveAPIView(generics.RetrieveAPIView):
 
 class MaterialUpdateAPIView(generics.UpdateAPIView):
     """
-    Отвечает за редактирование Материала
+    Отвечает за редактирование Материала.
     """
     serializer_class = MaterialSerializer
     queryset = Material.objects.all()
@@ -85,16 +85,22 @@ class MaterialUpdateAPIView(generics.UpdateAPIView):
 
 class MaterialDestroyAPIView(generics.DestroyAPIView):
     """
-    Отвечает за удаление Материала
+    Отвечает за удаление Материала.
     """
     queryset = Material.objects.all()
     permission_classes = [IsModer]
 
 
 class CheckAnswerCreateAPIView(generics.CreateAPIView):
+    """
+    Отвечает за проверку ответа на вопрос.
+    """
     serializer_class = CheckAnswerSerializer
 
     def perform_create(self, serializer):
+        """
+        Записывает результат проверки ответа на вопрос.
+        """
         check_answer = serializer.save()
         if check_answer.answer.user_answer.lower() == check_answer.question.right_answer.lower():
             check_answer.is_right = True
@@ -102,9 +108,15 @@ class CheckAnswerCreateAPIView(generics.CreateAPIView):
 
 
 class AnswerCreateAPIView(generics.CreateAPIView):
+    """
+    Отвечает за запись ответа пользователя на вопрос.
+    """
     serializer_class = AnswerSerializer
 
     def perform_create(self, serializer):
+        """
+        Засчитывает ответ пользователю.
+        """
         answer = serializer.save()
         answer.user = self.request.user
         answer.save()
