@@ -11,7 +11,7 @@ class MaterialTestCase(APITestCase):
     def setUp(self) -> None:
         self.client = APIClient()
 
-        self.user = User.objects.create(id=1, email='test@sky.pro', password='1234567')
+        self.user = User.objects.create(id=1, email='test@sky.pro', password='1234567', is_staff=True)
         self.client.force_authenticate(user=self.user)
 
         self.question = Question.objects.create(question='is_test?', right_answer='yes')
