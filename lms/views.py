@@ -1,8 +1,8 @@
-from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics
+from rest_framework.permissions import IsAdminUser
 
-from lms.models import Chapter, Material, CheckAnswer
+from lms.models import Chapter, Material
 from lms.serializers import ChapterSerializer, MaterialSerializer, CheckAnswerSerializer, AnswerSerializer
 from users.permissons import IsModer
 
@@ -53,7 +53,7 @@ class MaterialCreateAPIView(generics.CreateAPIView):
     Отвечает за создание нового Материала.
     """
     serializer_class = MaterialSerializer
-    permission_classes = [IsModer]
+    permission_classes = [IsModer | IsAdminUser]
 
 
 class MaterialListAPIView(generics.ListAPIView):
@@ -80,7 +80,7 @@ class MaterialUpdateAPIView(generics.UpdateAPIView):
     """
     serializer_class = MaterialSerializer
     queryset = Material.objects.all()
-    permission_classes = [IsModer]
+    permission_classes = [IsModer | IsAdminUser]
 
 
 class MaterialDestroyAPIView(generics.DestroyAPIView):
@@ -88,7 +88,7 @@ class MaterialDestroyAPIView(generics.DestroyAPIView):
     Отвечает за удаление Материала.
     """
     queryset = Material.objects.all()
-    permission_classes = [IsModer]
+    permission_classes = [IsModer | IsAdminUser]
 
 
 class CheckAnswerCreateAPIView(generics.CreateAPIView):
